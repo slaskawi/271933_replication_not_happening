@@ -1,0 +1,15 @@
+<infinispan>
+    <jgroups>
+        <stack-file name="configurationFile" path="config/jgroups.xml"/>
+    </jgroups>
+    <cache-container>
+        <transport  cluster="x-cluster" stack="configurationFile" />
+        <replicated-cache name="transactional-type" mode="SYNC">
+            <transaction mode="NON_XA"  locking="OPTIMISTIC" transaction-manager-lookup="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"  auto-commit="true"  />
+            <locking acquire-timeout="60000"/>
+            <expiration lifespan="43200000"/>
+            <state-transfer enabled="true" timeout="240000" chunk-size="10000" />
+            <locking isolation="READ_COMMITTED"  acquire-timeout="20000"  write-skew="false"  concurrency-level="5000"  striping="false"  />
+        </replicated-cache>
+    </cache-container>
+</infinispan>
